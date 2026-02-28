@@ -1,6 +1,6 @@
 package com.example.Spring.entity;
 
-import jakarta.persistence.Entity;
+
 import lombok.Data;
 
 @Data
