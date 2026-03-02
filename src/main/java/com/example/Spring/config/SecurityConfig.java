@@ -1,6 +1,4 @@
 package com.example.Spring.config;
-
-
 import com.example.Spring.filter.JWTAuthFilter;
 import com.example.Spring.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+
 
 @Configuration
 @EnableWebSecurity
@@ -31,6 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/authenticate").permitAll()
+                        .requestMatchers("/api/hello").hasRole("ADMIN")
                         .anyRequest().authenticated());
                 //.httpBasic(withDefaults());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -50,7 +49,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(UserDetailsService userDetailsService,PasswordEncoder passwordEncoder){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(userDetailsService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
-
       return new ProviderManager(daoAuthenticationProvider);
 
     }
