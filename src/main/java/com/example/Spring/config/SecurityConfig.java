@@ -1,9 +1,11 @@
 package com.example.Spring.config;
+import com.example.Spring.entity.Permissions;
 import com.example.Spring.filter.JWTAuthFilter;
 import com.example.Spring.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -29,7 +31,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/authenticate").permitAll()
-                        .requestMatchers("/api/hello").hasRole("ADMIN")
+                        //.requestMatchers("/api/hello").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/api/hello").hasAuthority(Permissions.WEATHER_READ.name())
+                        .requestMatchers(HttpMethod.PUT,"/api/world").hasAuthority(Permissions.WEATHER_READ.name())
                         .anyRequest().authenticated());
                 //.httpBasic(withDefaults());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
