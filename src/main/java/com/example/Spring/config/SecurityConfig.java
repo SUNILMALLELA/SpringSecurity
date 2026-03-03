@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/authenticate").permitAll()
+                        .requestMatchers("/api/users/register").permitAll()
                         //.requestMatchers("/api/hello").hasRole("ADMIN")
                         //.requestMatchers(HttpMethod.GET,"/api/hello").hasAuthority(Permissions.WEATHER_READ.name())
                         //.requestMatchers(HttpMethod.PUT,"/api/world").hasAuthority(Permissions.WEATHER_READ.name())
