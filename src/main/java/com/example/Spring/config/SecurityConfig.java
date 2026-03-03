@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private JWTAuthFilter jwtAuthFilter;
@@ -32,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers("/authenticate").permitAll()
                         //.requestMatchers("/api/hello").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/api/hello").hasAuthority(Permissions.WEATHER_READ.name())
-                        .requestMatchers(HttpMethod.PUT,"/api/world").hasAuthority(Permissions.WEATHER_READ.name())
+                        //.requestMatchers(HttpMethod.GET,"/api/hello").hasAuthority(Permissions.WEATHER_READ.name())
+                        //.requestMatchers(HttpMethod.PUT,"/api/world").hasAuthority(Permissions.WEATHER_READ.name())
                         .anyRequest().authenticated());
                 //.httpBasic(withDefaults());
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
