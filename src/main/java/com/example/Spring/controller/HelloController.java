@@ -19,7 +19,7 @@ public class HelloController {
     @PutMapping("/world")
     @PreAuthorize("hasAuthority('WEATHER_READ')")
     public String world(){
-        return "Welcome to Java";
+        return "Welcome to SpringBoot";
     }
 
 }
